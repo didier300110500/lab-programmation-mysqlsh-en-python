@@ -45,11 +45,13 @@ def lecture(fichier):
   return docs
 
 def former_des_chefs(docs):
-
+ 
   # Crée une nouvelle collection 'chefs_de_gouvernement'
   nomColl = 'chefs_de_gouvernement'
   maColl = db.create_collection(nomColl)
 
+# Ajout manuel
+  maColl.add({"HeadOfState": "Marc Ravalomanana","GovernmentForm": "Republic"}).execute()
   # Manipuler la collection et la rajouter à la nouvelle
   for doc in docs.fetch_all():
     for country in doc.countries:
@@ -59,23 +61,17 @@ def former_des_chefs(docs):
   # Trouver tous les documents JSON et les mettre en mémoire
   docs = maColl.find().execute()
 
-  # Détruit la collection
-  db.drop_collection(nomColl)
 
   return docs
 
 def main():
-
   docs = lecture('b000000000.json')
   chefs = former_des_chefs(docs)
   print(len(chefs.fetch_all()))
-  print(charge('b000000000.json'))
-
-# Ne pas oublier de remercier le gestionnaire de BD
+  # Ne pas oublier de remercier le gestionnaire de BD
   session.close
 
 if __name__== "__main__":
     main()
-
 
 
