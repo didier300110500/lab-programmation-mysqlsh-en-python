@@ -26,7 +26,7 @@ def lecture(fichier):
   # Le nom de la collection temporaire
   nomColl = "temp"
 
-  # Crée la collection temporaire maColl
+  # CrÃ©e la collection temporaire maColl
   maColl = db.create_collection(nomColl)
 
   # charge le fichier dans la variable json
@@ -38,7 +38,7 @@ def lecture(fichier):
   # Lis toute les documents convertis de la collection et les stocker dans la variable docs
   docs = maColl.find().execute()
 
-  # Détruit la collection temporaire
+  # DÃ©truit la collection temporaire
   db.drop_collection(nomColl)
 
   # Retourne un dictionnaire Python du fichier json converti
@@ -46,22 +46,23 @@ def lecture(fichier):
 
 def former_des_chefs(docs):
  
-  # Crée une nouvelle collection 'chefs_de_gouvernement'
+  # CrÃ©e une nouvelle collection 'chefs_de_gouvernement'
   nomColl = 'chefs_de_gouvernement'
   maColl = db.create_collection(nomColl)
 
 # Ajout manuel
   maColl.add({"HeadOfState": "Marc Ravalomanana","GovernmentForm": "Republic"}).execute()
-  # Manipuler la collection et la rajouter à la nouvelle
+  # Manipuler la collection et la rajouter Ã  la nouvelle
   for doc in docs.fetch_all():
     for country in doc.countries:
       # Insert des documents JSON de type government
       maColl.add(country['government']).execute()
 
-  # Trouver tous les documents JSON et les mettre en mémoire
+  # Trouver tous les documents JSON et les mettre en mÃ©moire
   docs = maColl.find().execute()
 
-
+# DÃ©truit la collection
+  #db.drop_collection(nomColl)
   return docs
 
 def main():
